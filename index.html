@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Photo Tale Design — Custom Photo Albums</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Didact+Gothic&display=swap" rel="stylesheet"/>
+<style>
+:root{--ivory:#faf8f4;--cream:#f4f0e8;--linen:#ece5d8;--sand:#d6ccba;--gold:#b8966a;--gold-lt:#cead82;--dark:#1a1714;--muted:#7a6f62;--white:#ffffff;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:'Didact Gothic',sans-serif;background:var(--ivory);overflow-x:hidden;}
+h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;font-weight:300;letter-spacing:.02em;}
+.fade{opacity:0;transform:translateY(32px);transition:opacity .9s ease,transform .9s ease;}.fade.in{opacity:1;transform:none;}
+.fade.d1{transition-delay:.15s;}.fade.d2{transition-delay:.3s;}.fade.d3{transition-delay:.45s;}
+#nav{position:fixed;top:0;left:0;right:0;z-index:500;height:70px;padding:0 5vw;display:flex;align-items:center;justify-content:space-between;transition:background .4s,box-shadow .4s;}
+#nav.solid{background:rgba(250,248,244,.97);box-shadow:0 1px 0 var(--linen);}
+.logo{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--dark);text-decoration:none;}
+.logo span{font-style:italic;color:var(--gold);font-weight:300;}
+.nav-links{display:flex;gap:2.8rem;list-style:none;}
+.nav-links a{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .25s;}
+.nav-links a:hover{color:var(--dark);}
+.nav-btn{color:var(--dark)!important;border:1px solid var(--dark);padding:.55rem 1.5rem;transition:background .3s,color .3s;}
+.nav-btn:hover{background:var(--dark)!important;color:var(--ivory)!important;}
+.btn-solid{background:var(--dark);color:var(--ivory);padding:.9rem 2.5rem;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;border:1px solid var(--dark);transition:background .3s;display:inline-block;}
+.btn-solid:hover{background:var(--gold);border-color:var(--gold);}
+.btn-outline{color:var(--dark);border:1px solid var(--sand);padding:.9rem 2.5rem;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;transition:border-color .3s;display:inline-block;}
+.btn-outline:hover{border-color:var(--dark);}
+/* HERO */
+#hero{min-height:100vh;padding-top:70px;display:grid;grid-template-columns:1fr 1fr;}
+.hero-l{background:var(--cream);display:flex;flex-direction:column;justify-content:center;padding:9vw 5vw 9vw 7vw;position:relative;overflow:hidden;}
+.hero-l::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),transparent);}
+.hero-eyebrow{font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:2rem;display:flex;align-items:center;gap:.9rem;}
+.hero-eyebrow::before{content:'';width:36px;height:1px;background:var(--gold);}
+.hero-h1{font-size:clamp(3.4rem,5.5vw,6rem);line-height:1.04;color:var(--dark);margin-bottom:2.2rem;}
+.hero-h1 em{display:block;font-style:italic;color:var(--gold);}
+.hero-p{font-size:.88rem;line-height:2;color:var(--muted);max-width:400px;margin-bottom:3.5rem;letter-spacing:.03em;}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+.hero-r{position:relative;background:var(--linen);overflow:hidden;display:grid;grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr;gap:2px;}
+.hcell{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.hcell:nth-child(1){grid-row:span 2;background:linear-gradient(150deg,#cfc0a8,#b8a485);}
+.hcell:nth-child(2){background:linear-gradient(150deg,#ddd4c4,#c8bba8);}
+.hcell:nth-child(3){background:linear-gradient(150deg,#c5b89e,#b0a088);}
+.hcell svg{width:44px;height:44px;opacity:.15;fill:var(--dark);}
+.hcell-lbl{position:absolute;bottom:.9rem;right:.9rem;font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(26,23,20,.4);}
+.scroll-ind{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);}
+.scroll-line{width:1px;height:44px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scl 2s ease-in-out infinite;}
+@keyframes scl{0%,100%{opacity:.3}50%{opacity:1}}
+/* PILLARS */
+#pillars{background:var(--white);padding:5.5rem 8vw;border-bottom:1px solid var(--linen);}
+.pillars-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.pillar{padding:3rem 2.5rem;text-align:center;border:1px solid transparent;transition:border-color .35s,background .35s;}
+.pillar:hover{border-color:var(--linen);background:var(--ivory);}
+.pillar-sym{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--gold);margin-bottom:1.2rem;display:block;font-style:italic;}
+.pillar h3{font-size:1.15rem;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:var(--dark);margin-bottom:.8rem;}
+.pillar p{font-size:.8rem;line-height:1.85;color:var(--muted);letter-spacing:.03em;}
+/* ABOUT */
+#about{padding:10rem 8vw;display:grid;grid-template-columns:1fr 1fr;gap:9rem;align-items:center;}
+.about-imgs{position:relative;}
+.about-main{width:100%;aspect-ratio:3/4;background:linear-gradient(150deg,#d4c8b4,#bfaf96);display:flex;align-items:center;justify-content:center;}
+.about-main svg{width:56px;height:56px;opacity:.12;fill:var(--dark);}
+.about-float{position:absolute;bottom:-2.5rem;right:-2.5rem;width:52%;aspect-ratio:4/5;background:linear-gradient(150deg,#e2d9cc,#d0c4b0);border:5px solid var(--ivory);display:flex;align-items:center;justify-content:center;}
+.about-float svg{width:34px;height:34px;opacity:.12;fill:var(--dark);}
+.about-bignumber{position:absolute;top:-2rem;left:-1.5rem;font-family:'Cormorant Garamond',serif;font-size:9rem;font-weight:300;line-height:1;color:rgba(184,150,106,.1);pointer-events:none;user-select:none;}
+.tag-line{display:flex;align-items:center;gap:.9rem;margin-bottom:1.5rem;}
+.tag-line::before{content:'';width:28px;height:1px;background:var(--gold);}
+.tag{font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);}
+.about-txt h2{font-size:clamp(2.4rem,3.5vw,4rem);line-height:1.1;color:var(--dark);margin-bottom:2rem;}
+.about-txt h2 em{font-style:italic;color:var(--gold);}
+.about-txt p{font-size:.85rem;line-height:2;color:var(--muted);margin-bottom:1.2rem;letter-spacing:.03em;}
+.about-sig{margin-top:2.5rem;font-family:'Cormorant Garamond',serif;font-size:2rem;font-style:italic;font-weight:300;color:var(--gold);}
+/* CTA BAND */
+#cta-band{background:var(--dark);padding:8rem 8vw;text-align:center;position:relative;overflow:hidden;}
+#cta-band::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(184,150,106,.07) 0%,transparent 70%);pointer-events:none;}
+.cta-tag{font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:1.5rem;}
+#cta-band h2{font-size:clamp(3rem,5vw,5.5rem);color:var(--ivory);font-weight:300;line-height:1.08;margin-bottom:1.5rem;}
+#cta-band h2 em{font-style:italic;color:var(--gold-lt);}
+#cta-band p{font-size:.88rem;color:rgba(250,248,244,.5);line-height:1.9;max-width:480px;margin:0 auto 3.5rem;letter-spacing:.04em;}
+.cta-ghost{color:var(--ivory);border:1px solid rgba(250,248,244,.3);padding:.9rem 2.5rem;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;display:inline-block;transition:border-color .3s,background .3s;}
+.cta-ghost:hover{border-color:var(--gold);background:var(--gold);color:var(--dark);}
+/* POPUP */
+.popup-overlay{display:none;position:fixed;inset:0;background:rgba(20,16,12,.75);z-index:1000;align-items:center;justify-content:center;backdrop-filter:blur(6px);}
+.popup-overlay.open{display:flex;}
+.popup-box{background:var(--ivory);max-width:400px;width:90%;padding:3.5rem 3rem;position:relative;}
+.popup-close{position:absolute;top:1.2rem;right:1.4rem;background:none;border:none;font-size:1.3rem;color:var(--muted);cursor:pointer;line-height:1;transition:color .2s;}
+.popup-close:hover{color:var(--dark);}
+.popup-tag{font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:1.2rem;}
+.popup-box h3{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:300;color:var(--dark);margin-bottom:.7rem;}
+.popup-box p{font-size:.8rem;color:var(--muted);line-height:1.75;margin-bottom:2rem;letter-spacing:.03em;}
+#code-input{width:100%;border:none;border-bottom:1px solid var(--sand);background:transparent;padding:.8rem 0;font-family:'Didact Gothic',sans-serif;font-size:1rem;text-align:center;letter-spacing:.3em;outline:none;color:var(--dark);transition:border-color .3s;}
+#code-input:focus{border-color:var(--gold);}
+#code-input::placeholder{letter-spacing:.1em;color:var(--sand);font-size:.78rem;}
+#code-error{font-size:.74rem;color:#904030;margin:.7rem 0 0;display:none;}
+.popup-btn{width:100%;background:var(--dark);color:var(--ivory);border:none;padding:1rem;font-family:'Didact Gothic',sans-serif;font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;margin-top:1.4rem;transition:background .3s;}
+.popup-btn:hover{background:var(--gold);}
+.popup-note{margin-top:1.2rem;font-size:.74rem;color:var(--muted);text-align:center;}
+.popup-note a{color:var(--gold);text-decoration:none;}
+/* FOOTER */
+footer{background:var(--dark);padding:5rem 6vw 2.5rem;}
+.ft-top{display:grid;grid-template-columns:2fr 1fr 1fr;gap:4rem;padding-bottom:3.5rem;border-bottom:1px solid rgba(255,255,255,.07);}
+.ft-brand .logo{color:var(--ivory);display:block;margin-bottom:1.2rem;}
+.ft-brand p{font-size:.78rem;color:rgba(250,248,244,.32);line-height:1.85;max-width:260px;}
+.ft-col h4{font-family:'Didact Gothic',sans-serif;font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;}
+.ft-col ul{list-style:none;display:flex;flex-direction:column;gap:.65rem;}
+.ft-col a{text-decoration:none;font-size:.78rem;color:rgba(250,248,244,.38);letter-spacing:.04em;transition:color .25s;}
+.ft-col a:hover{color:var(--gold-lt);}
+.ft-bottom{padding-top:2rem;display:flex;justify-content:space-between;align-items:center;}
+.ft-bottom p{font-size:.65rem;color:rgba(250,248,244,.2);letter-spacing:.08em;}
+</style>
+</head>
+<body>
+<nav id="nav">
+  <a class="logo" href="index.html">Photo <span>Tale</span> Design</a>
+  <ul class="nav-links">
+    <li><a href="albums.html">Albums</a></li>
+    <li><a href="portfolio.html">Portfolio</a></li>
+    <li><a href="process.html">How It Works</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="upload.html">Upload Photos</a></li>
+    <li><a href="contact.html" class="nav-btn">Start Your Album</a></li>
+  </ul>
+</nav>
+
+<div class="popup-overlay" id="popup">
+  <div class="popup-box">
+    <button class="popup-close" onclick="closePopup()">✕</button>
+    <span class="popup-tag">Private Portfolio</span>
+    <h3>Enter Access Code</h3>
+    <p>Our sample gallery is available to clients and referred guests. Enter your code to view the full portfolio.</p>
+    <input id="code-input" type="password" placeholder="Access code"/>
+    <p id="code-error">Incorrect code — please try again.</p>
+    <button class="popup-btn" onclick="checkCode()">View Portfolio →</button>
+    <p class="popup-note">Don't have a code? <a href="contact.html">Contact us</a></p>
+  </div>
+</div>
+
+<section id="hero">
+  <div class="hero-l">
+    <p class="hero-eyebrow fade">Custom Album Design · New York</p>
+    <h1 class="hero-h1 fade d1">The Ultimate<br><em>Album</em><br>Experience</h1>
+    <p class="hero-p fade d2">At Photo Tale Design, we help you turn the most important events of your life into albums of beauty and joy — crafted with elegance, care, and lasting quality.</p>
+    <div class="hero-btns fade d3">
+      <a href="#" class="btn-solid" onclick="openPopup();return false;">View Samples</a>
+      <a href="contact.html" class="btn-outline">Start Your Album</a>
+    </div>
+  </div>
+  <div class="hero-r">
+    <div class="hcell"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg><span class="hcell-lbl">Wedding</span></div>
+    <div class="hcell"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg><span class="hcell-lbl">Family</span></div>
+    <div class="hcell"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg><span class="hcell-lbl">Events</span></div>
+    <div class="scroll-ind"><div class="scroll-line"></div><span>Scroll</span></div>
+  </div>
+</section>
+
+<section id="pillars">
+  <div class="pillars-grid">
+    <div class="pillar fade"><span class="pillar-sym">✦</span><h3>Custom Albums</h3><p>Every album designed from scratch — tailored to your story, your style, and your most treasured moments.</p></div>
+    <div class="pillar fade d1"><span class="pillar-sym">◇</span><h3>Elegant Designs</h3><p>We excel in bringing out the beauty of each picture with clean, modern, sophisticated layouts.</p></div>
+    <div class="pillar fade d2"><span class="pillar-sym">○</span><h3>Superior Service</h3><p>We provide an unparalleled album experience — personal, attentive, and truly bespoke from first photo to final page.</p></div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="about-imgs fade">
+    <div class="about-bignumber">01</div>
+    <div class="about-main"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></div>
+    <div class="about-float"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></div>
+  </div>
+  <div class="about-txt fade d1">
+    <p class="tag tag-line">Our Story</p>
+    <h2>Designed with<br><em>Heart &amp; Detail</em></h2>
+    <p>At Photo Tale Design, we believe your photographs deserve more than a folder on a hard drive. They deserve to be held, turned, and felt — preserved in an album that tells your story with grace.</p>
+    <p>We work with families, couples, and individuals to design custom photo albums that reflect the beauty and emotion of their most meaningful moments. Every layout, every page — crafted with personal care.</p>
+    <p>This is not just printing. This is designing a piece of your family history.</p>
+    <div class="about-sig">Photo Tale Design</div>
+  </div>
+</section>
+
+<section id="cta-band">
+  <span class="cta-tag fade">Begin Your Journey</span>
+  <h2 class="fade d1">Ready to Begin<br><em>Your Album?</em></h2>
+  <p class="fade d2">Send us your photos and we'll help turn them into a beautiful story — designed with care, built to last a lifetime.</p>
+  <a href="contact.html" class="cta-ghost fade d3">Start Now</a>
+</section>
+
+<footer>
+  <div class="ft-top">
+    <div class="ft-brand"><a class="logo" href="index.html">Photo <span>Tale</span> Design</a><p>Custom photo album design — turning your most precious memories into timeless keepsakes.</p></div>
+    <div class="ft-col"><h4>Navigate</h4><ul><li><a href="albums.html">Albums</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="process.html">How It Works</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div class="ft-col"><h4>Contact Us</h4><ul><li><a href="mailto:info@phototaledesign.com">info@phototaledesign.com</a></li><li><a href="tel:+19296300298">(929) 630-0298</a></li></ul></div>
+  </div>
+  <div class="ft-bottom"><p>© 2026 Photo Tale Design. All rights reserved.</p><p>phototaledesign.com</p></div>
+</footer>
+<script>
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('solid',scrollY>50));
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}});},{threshold:.1});
+document.querySelectorAll('.fade').forEach(el=>obs.observe(el));
+const CODE="123";
+function openPopup(){document.getElementById('popup').classList.add('open');setTimeout(()=>document.getElementById('code-input').focus(),100);}
+function closePopup(){document.getElementById('popup').classList.remove('open');document.getElementById('code-input').value='';document.getElementById('code-error').style.display='none';}
+function checkCode(){const v=document.getElementById('code-input').value.trim();if(v===CODE){window.location.href='samples.html';}else{document.getElementById('code-error').style.display='block';document.getElementById('code-input').value='';document.getElementById('code-input').focus();}}
+document.getElementById('code-input').addEventListener('keydown',e=>{if(e.key==='Enter')checkCode();});
+document.getElementById('popup').addEventListener('click',function(e){if(e.target===this)closePopup();});
+</script>
+</body>
+</html>
