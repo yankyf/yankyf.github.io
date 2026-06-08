@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Thank You – Phototale Design</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --cream: #f9f5ef;
+    --warm-white: #fdf9f4;
+    --sand: #e8dcc8;
+    --gold: #c4a35a;
+    --charcoal: #2a2520;
+    --warm-gray: #7a6f64;
+    --accent: #8b4a3c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--warm-white);
+    color: var(--charcoal);
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+  }
+
+  nav {
+    padding: 1.4rem 4rem;
+    background: var(--cream);
+    border-bottom: 1px solid var(--sand);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.45rem; color: var(--charcoal);
+    text-decoration: none; letter-spacing: 0.04em;
+  }
+  .nav-logo span { color: var(--gold); font-style: italic; }
+
+  main {
+    flex: 1;
+    display: flex; align-items: center; justify-content: center;
+    padding: 4rem 2rem;
+  }
+
+  .card {
+    background: var(--cream);
+    border-radius: 4px;
+    padding: 4rem;
+    max-width: 620px; width: 100%;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 40px rgba(42,37,32,0.08);
+  }
+
+  .card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gold), var(--accent), var(--gold));
+  }
+
+  .icon-wrap {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 2rem;
+    font-size: 2rem;
+    background: var(--warm-white);
+    animation: popIn 0.6s ease both;
+  }
+
+  @keyframes popIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .eyebrow {
+    font-size: 0.75rem; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 0.8rem;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.6rem; line-height: 1.15;
+    margin-bottom: 1.2rem;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  h1 em { color: var(--accent); font-style: italic; }
+
+  .desc {
+    color: var(--warm-gray); font-size: 1rem;
+    line-height: 1.8; margin-bottom: 2.5rem;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .steps {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem; margin-bottom: 2.5rem;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+
+  .step {
+    background: var(--warm-white);
+    padding: 1.2rem; border-radius: 3px;
+    border: 1px solid var(--sand);
+  }
+
+  .step-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; color: var(--gold);
+    margin-bottom: 0.4rem;
+  }
+
+  .step p {
+    font-size: 0.8rem; color: var(--warm-gray);
+    line-height: 1.5;
+  }
+
+  .divider {
+    height: 1px; background: var(--sand);
+    margin: 0 0 2rem;
+  }
+
+  .contact-line {
+    font-size: 0.85rem; color: var(--warm-gray);
+    margin-bottom: 2rem;
+    animation: fadeUp 0.6s 0.5s ease both;
+  }
+
+  .contact-line a { color: var(--gold); text-decoration: none; }
+
+  .btn-home {
+    display: inline-block;
+    background: var(--charcoal); color: var(--cream);
+    padding: 0.9rem 2.5rem; border-radius: 2px;
+    text-decoration: none; font-size: 0.83rem;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    transition: background 0.25s;
+    animation: fadeUp 0.6s 0.55s ease both;
+  }
+  .btn-home:hover { background: var(--gold); color: var(--charcoal); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  footer {
+    text-align: center; padding: 1.5rem;
+    font-size: 0.78rem; color: rgba(42,37,32,0.35);
+    border-top: 1px solid var(--sand);
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">Photo<span>tale</span> Design</a>
+</nav>
+
+<main>
+  <div class="card">
+    <div class="icon-wrap">✉️</div>
+    <p class="eyebrow">Request Received</p>
+    <h1>Thank You for<br><em>Reaching Out!</em></h1>
+    <p class="desc">
+      We've received your order request and are excited to work with you.
+      Our team will review your details and get back to you within <strong>24 hours</strong>.
+    </p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <p>We review your request & photos</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <p>We send you a custom quote</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <p>We start designing your album</p>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <p class="contact-line">
+      Questions? Reach us at
+      <a href="mailto:info@phototaledesign.com">info@phototaledesign.com</a>
+      or call <a href="tel:+19296300298">(929) 630-0298</a>
+    </p>
+
+    <a href="index.html" class="btn-home">← Back to Home</a>
+  </div>
+</main>
+
+<footer>
+  © 2026 Phototale Design · All rights reserved
+</footer>
+
+</body>
+</html>

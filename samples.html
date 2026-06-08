@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sample Gallery – Phototale Design</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --cream: #f9f5ef;
+    --warm-white: #fdf9f4;
+    --sand: #e8dcc8;
+    --gold: #c4a35a;
+    --charcoal: #2a2520;
+    --warm-gray: #7a6f64;
+    --accent: #8b4a3c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Jost', sans-serif; background: var(--warm-white); color: var(--charcoal); font-weight: 300; }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.4rem 4rem;
+    background: rgba(249,245,239,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--sand);
+  }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.45rem; color: var(--charcoal); text-decoration: none; letter-spacing: 0.04em; }
+  .nav-logo span { color: var(--gold); font-style: italic; }
+  .nav-back { font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--warm-gray); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: color 0.2s; }
+  .nav-back:hover { color: var(--gold); }
+
+  .page-header {
+    background: var(--cream);
+    padding: 4rem 6rem 3rem;
+    border-bottom: 1px solid var(--sand);
+  }
+  .page-header p { font-size: 0.75rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; }
+  .page-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3vw, 3rem); margin-bottom: 0.8rem; }
+  .page-header span { color: var(--warm-gray); font-size: 0.92rem; }
+
+  .gallery-controls {
+    padding: 2rem 6rem;
+    background: var(--warm-white);
+    border-bottom: 1px solid var(--sand);
+    display: flex; gap: 0.8rem; flex-wrap: wrap;
+  }
+  .filter-btn {
+    padding: 0.45rem 1.3rem; border: 1.5px solid var(--sand);
+    background: transparent; cursor: pointer; border-radius: 2px;
+    font-family: 'Jost', sans-serif; font-size: 0.78rem;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--warm-gray);
+    transition: all 0.2s;
+  }
+  .filter-btn.active, .filter-btn:hover {
+    border-color: var(--charcoal); background: var(--charcoal); color: var(--cream);
+  }
+
+  .gallery-section { padding: 3rem 6rem 5rem; }
+
+  .gallery-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem;
+  }
+
+  .gallery-card {
+    position: relative; overflow: hidden; border-radius: 3px;
+    background: var(--sand); cursor: pointer;
+    transition: transform 0.3s;
+  }
+  .gallery-card:hover { transform: translateY(-4px); }
+  .gallery-card:nth-child(1) { aspect-ratio: 4/5; }
+  .gallery-card:nth-child(2) { aspect-ratio: 4/3; grid-column: span 2; }
+  .gallery-card:nth-child(3) { aspect-ratio: 4/3; grid-column: span 2; }
+  .gallery-card:nth-child(4) { aspect-ratio: 4/5; }
+  .gallery-card:nth-child(5) { aspect-ratio: 1/1; }
+  .gallery-card:nth-child(6) { aspect-ratio: 4/5; }
+  .gallery-card:nth-child(7) { aspect-ratio: 4/5; }
+  .gallery-card:nth-child(8) { aspect-ratio: 4/3; grid-column: span 2; }
+
+  .gallery-card-inner {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.45s ease;
+  }
+  .gallery-card:hover .gallery-card-inner { transform: scale(1.04); }
+
+  /* different warm tones for each card */
+  .gallery-card:nth-child(1) .gallery-card-inner { background: linear-gradient(145deg, #d4c4b0, #c9b89a); }
+  .gallery-card:nth-child(2) .gallery-card-inner { background: linear-gradient(145deg, #c9b89a, #b5a080); }
+  .gallery-card:nth-child(3) .gallery-card-inner { background: linear-gradient(145deg, #b5a080, #a08060); }
+  .gallery-card:nth-child(4) .gallery-card-inner { background: linear-gradient(145deg, #d8cbb5, #c9b89a); }
+  .gallery-card:nth-child(5) .gallery-card-inner { background: linear-gradient(145deg, #c4a35a44, #e8dcc8); }
+  .gallery-card:nth-child(6) .gallery-card-inner { background: linear-gradient(145deg, #e8dcc8, #d4c4b0); }
+  .gallery-card:nth-child(7) .gallery-card-inner { background: linear-gradient(145deg, #8b4a3c33, #d4c4b0); }
+  .gallery-card:nth-child(8) .gallery-card-inner { background: linear-gradient(145deg, #c9b89a, #d4c4b0); }
+
+  .gallery-card-inner svg { width: 52px; height: 52px; opacity: 0.2; fill: var(--charcoal); }
+
+  .gallery-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(42,37,32,0.75) 0%, transparent 55%);
+    opacity: 0; transition: opacity 0.3s;
+    display: flex; align-items: flex-end; padding: 1.4rem;
+  }
+  .gallery-card:hover .gallery-overlay { opacity: 1; }
+  .gallery-overlay-text { color: var(--cream); }
+  .gallery-overlay-text h4 { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 0.25rem; }
+  .gallery-overlay-text p { font-size: 0.75rem; opacity: 0.75; letter-spacing: 0.1em; }
+
+  .order-banner {
+    margin: 0 6rem 5rem;
+    background: var(--charcoal);
+    border-radius: 4px;
+    padding: 3rem 4rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .order-banner h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--cream); margin-bottom: 0.4rem; }
+  .order-banner p { color: rgba(249,245,239,0.6); font-size: 0.92rem; }
+  .order-banner a {
+    background: var(--gold); color: var(--charcoal);
+    padding: 0.9rem 2.4rem; text-decoration: none; white-space: nowrap;
+    font-size: 0.83rem; letter-spacing: 0.14em; text-transform: uppercase;
+    border-radius: 2px; transition: background 0.25s; font-weight: 500;
+  }
+  .order-banner a:hover { background: var(--cream); }
+
+  footer {
+    background: var(--charcoal); color: var(--cream);
+    padding: 2rem 6rem;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  footer p { font-size: 0.78rem; color: rgba(249,245,239,0.35); }
+  footer a { color: var(--gold); text-decoration: none; font-size: 0.78rem; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .gallery-card { animation: fadeUp 0.5s ease both; }
+  .gallery-card:nth-child(1) { animation-delay: 0.05s; }
+  .gallery-card:nth-child(2) { animation-delay: 0.1s; }
+  .gallery-card:nth-child(3) { animation-delay: 0.15s; }
+  .gallery-card:nth-child(4) { animation-delay: 0.2s; }
+  .gallery-card:nth-child(5) { animation-delay: 0.25s; }
+  .gallery-card:nth-child(6) { animation-delay: 0.3s; }
+  .gallery-card:nth-child(7) { animation-delay: 0.35s; }
+  .gallery-card:nth-child(8) { animation-delay: 0.4s; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">Photo<span>tale</span> Design</a>
+  <a class="nav-back" href="index.html">← Back to Home</a>
+</nav>
+
+<div class="page-header">
+  <p>Private Portfolio</p>
+  <h1>Sample Album Collections</h1>
+  <span>Hover over any album to see details · Contact us to place an order</span>
+</div>
+
+<div class="gallery-controls">
+  <button class="filter-btn active">All</button>
+  <button class="filter-btn">Weddings</button>
+  <button class="filter-btn">Family</button>
+  <button class="filter-btn">Travel</button>
+  <button class="filter-btn">Events</button>
+  <button class="filter-btn">Baby &amp; Milestones</button>
+</div>
+
+<div class="gallery-section">
+  <div class="gallery-grid">
+    <div class="gallery-card">
+      <div class="gallery-card-inner"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></div>
+      <div class="gallery-overlay"><div class="gallery-overlay-text"><h4>The Rose Garden</h4><p>Wedding · 40 pages</p></div></div>
+    </div>
+    <div class="gallery-card">
+      <div class="gallery-card-inner"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></div>
+      <div class="gallery-overlay"><div class="gallery-overlay-text"><h4>Harvest Family Portrait</h4><p>Family · 30 pages</p></div></div>
+    </div>
+    <div class="gallery-card">
+      <div class="gallery-card-inner"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></div>
+      <div class="gallery-overlay"><div class="gallery-overlay-text"><h4>Wanderlust Travel Book</h4><p>Travel · 50 pages</p></div></div>
+    </div>
+    <div class="gallery-card">
+      <div class="gallery-card-inner"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></div>
+      <div class="gallery-overlay"><div class="gallery-overlay-text"><h4>Baby's First Year</h4><p>Milestone · 24 pages</p></div></div>
+    </div>
+    <div class="gallery-card">
+      <div class="gallery-card-inner"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></div>
+      <div class="gallery-overlay"><div class="gallery-overlay-text"><h4>Golden Anniversary</h4><p>Special Event · 36 pages</p></div></div>
+    </div>
+    <div class="gallery-card">
+      <div class="gallery-card-inner"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></div>
+      <div class="gallery-overlay"><div class="gallery-overlay-text"><h4>Springtime Family</h4><p>Family · 28 pages</p></div></div>
+    </div>
+    <div class="gallery-card">
+      <div class="gallery-card-inner"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></div>
+      <div class="gallery-overlay"><div class="gallery-overlay-text"><h4>Corporate Gala 2025</h4><p>Event · 32 pages</p></div></div>
+    </div>
+    <div class="gallery-card">
+      <div class="gallery-card-inner"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></div>
+      <div class="gallery-overlay"><div class="gallery-overlay-text"><h4>The Linen Wedding</h4><p>Wedding · 52 pages</p></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="order-banner">
+  <div>
+    <h3>Ready to Create Yours?</h3>
+    <p>Love what you see? Let's design your perfect album together.</p>
+  </div>
+  <a href="index.html#contact">Place an Order →</a>
+</div>
+
+<footer>
+  <p>© 2026 Phototale Design · All rights reserved</p>
+  <a href="index.html">← Back to Home</a>
+</footer>
+
+<script>
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
