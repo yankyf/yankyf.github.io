@@ -182,50 +182,43 @@ footer{background:var(--dark);padding:4rem 6vw 2rem;margin-top:auto;}
 
   <div class="upload-grid">
 
-    <!-- LEFT: Upload form -->
+    <!-- LEFT: Request form -->
     <div class="upload-card fade">
-      <h3>Direct Upload</h3>
-      <span class="card-sub">Drag & Drop or Browse</span>
-      <p>Upload your photos directly here. Supports JPG, PNG, HEIC, and RAW files up to 500MB total.</p>
+      <h3>Send Your Request</h3>
+      <span class="card-sub">Fill In Your Details</span>
+      <p>Tell us about your project, then send your photos using one of the methods on the right. We'll be in touch within 1 business day.</p>
 
-      <div class="dropzone" id="dropzone">
-        <input type="file" id="file-input" multiple accept="image/*,.heic,.raw,.cr2,.nef,.arw" onchange="handleFiles(this.files)"/>
-        <span class="dropzone-icon">&#128247;</span>
-        <p><strong>Drop your photos here</strong><br>or click to browse your files</p>
-        <span class="browse">Browse Files</span>
-      </div>
+      <form id="upload-form" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="3c35c658-ba97-42e8-b41a-9a78ff7e7f6d"/>
+        <input type="hidden" name="subject" value="New Photo Submission — Photo Tale Design"/>
+        <input type="hidden" name="redirect" value="https://yankyf.github.io/thank-you.html"/>
+        <input type="checkbox" name="botcheck" style="display:none"/>
 
-      <div class="file-list" id="file-list"></div>
-      <p class="file-count" id="file-count"></p>
-
-      <div class="progress-wrap" id="progress-wrap">
-        <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-bar"></div></div>
-        <p class="progress-label" id="progress-label">Preparing upload...</p>
-      </div>
-
-      <div class="field-group">
-        <div class="field-row">
-          <div class="field"><label>Your Name</label><input type="text" id="uploader-name" placeholder="Jane Smith"/></div>
-          <div class="field"><label>Phone Number</label><input type="tel" id="uploader-phone" placeholder="+1 (555) 000-0000"/></div>
+        <div class="field-group">
+          <div class="field-row">
+            <div class="field"><label>Your Name</label><input type="text" name="name" placeholder="Jane Smith" required/></div>
+            <div class="field"><label>Phone Number</label><input type="tel" name="phone" placeholder="+1 (555) 000-0000"/></div>
+          </div>
+          <div class="field"><label>Email Address</label><input type="email" name="email" placeholder="jane@email.com" required/></div>
+          <div class="field">
+            <label>Album Type</label>
+            <select name="album_type" required>
+              <option value="">Select...</option>
+              <option>Wedding Album</option>
+              <option>Engagement Album</option>
+              <option>Bar / Bat Mitzvah Album</option>
+              <option>Baby Album</option>
+              <option>Family Album</option>
+              <option>Upsherin Album</option>
+              <option>Custom Project</option>
+            </select>
+          </div>
+          <div class="field"><label>Photo Link (Google Drive, Dropbox, WeTransfer…)</label><input type="url" name="photo_link" placeholder="https://drive.google.com/..."/></div>
+          <div class="field"><label>Notes for the Designer</label><textarea name="notes" placeholder="Any style preferences, important moments, people to highlight..."></textarea></div>
         </div>
-        <div class="field"><label>Email Address</label><input type="email" id="uploader-email" placeholder="jane@email.com"/></div>
-        <div class="field">
-          <label>Album Type</label>
-          <select id="uploader-album">
-            <option value="">Select...</option>
-            <option>Wedding Album</option>
-            <option>Engagement Album</option>
-            <option>Bar / Bat Mitzvah Album</option>
-            <option>Baby Album</option>
-            <option>Family Album</option>
-            <option>Upsherin Album</option>
-            <option>Custom Project</option>
-          </select>
-        </div>
-        <div class="field"><label>Notes for the Designer</label><textarea id="uploader-notes" placeholder="Any style preferences, important moments, people to highlight..."></textarea></div>
-      </div>
 
-      <button class="upload-submit-btn" onclick="submitUpload()">Send Photos & Request &#8594;</button>
+        <button type="submit" class="upload-submit-btn">Send Request &#8594;</button>
+      </form>
     </div>
 
     <!-- RIGHT: Other methods -->
@@ -271,8 +264,8 @@ footer{background:var(--dark);padding:4rem 6vw 2rem;margin-top:auto;}
 <div id="upload-success">
   <div class="success-box">
     <span class="success-icon">&#10003;</span>
-    <h2>Photos <em>Received!</em></h2>
-    <p>Thank you — your photos and request have been successfully sent to Photo Tale Design.</p>
+    <h2>Request <em>Received!</em></h2>
+    <p>Thank you — your request has been sent. Don't forget to send your photos via Google Drive, Dropbox, or WeTransfer to <a href="mailto:info@phototaledesign.com" style="color:var(--gold);text-decoration:none;">info@phototaledesign.com</a>.</p>
     <div class="success-steps">
       <div class="success-step"><span class="success-step-n">01</span><p>We'll review your photos and notes within 1 business day</p></div>
       <div class="success-step"><span class="success-step-n">02</span><p>Our designer will begin your album layout</p></div>
@@ -294,7 +287,6 @@ footer{background:var(--dark);padding:4rem 6vw 2rem;margin-top:auto;}
 
 <script>
 const UPLOAD_CODE = "456";
-let selectedFiles = [];
 
 // ── CODE GATE ──
 function checkUploadCode() {
@@ -313,97 +305,6 @@ function checkUploadCode() {
 document.getElementById("upload-code-input").addEventListener("keydown", e => {
   if (e.key === "Enter") checkUploadCode();
 });
-
-// ── DRAG & DROP ──
-const dropzone = document.getElementById("dropzone");
-dropzone.addEventListener("dragover", e => { e.preventDefault(); dropzone.classList.add("dragover"); });
-dropzone.addEventListener("dragleave", () => dropzone.classList.remove("dragover"));
-dropzone.addEventListener("drop", e => {
-  e.preventDefault();
-  dropzone.classList.remove("dragover");
-  handleFiles(e.dataTransfer.files);
-});
-
-function handleFiles(files) {
-  for (let f of files) {
-    if (!selectedFiles.find(x => x.name === f.name && x.size === f.size)) {
-      selectedFiles.push(f);
-    }
-  }
-  renderFileList();
-}
-
-function renderFileList() {
-  const list = document.getElementById("file-list");
-  const count = document.getElementById("file-count");
-  list.innerHTML = "";
-  let totalSize = 0;
-  selectedFiles.forEach((f, i) => {
-    totalSize += f.size;
-    const item = document.createElement("div");
-    item.className = "file-item";
-    item.innerHTML = `<span>${f.name}</span><span class="file-size">${(f.size/1024/1024).toFixed(1)} MB</span><button class="remove-file" onclick="removeFile(${i})">&#10005;</button>`;
-    list.appendChild(item);
-  });
-  if (selectedFiles.length > 0) {
-    count.textContent = `${selectedFiles.length} photo${selectedFiles.length > 1 ? "s" : ""} selected — ${(totalSize/1024/1024).toFixed(1)} MB total`;
-  } else {
-    count.textContent = "";
-  }
-}
-
-function removeFile(index) {
-  selectedFiles.splice(index, 1);
-  renderFileList();
-}
-
-// ── SUBMIT ──
-function submitUpload() {
-  const name = document.getElementById("uploader-name").value.trim();
-  const email = document.getElementById("uploader-email").value.trim();
-  const phone = document.getElementById("uploader-phone").value.trim();
-  const album = document.getElementById("uploader-album").value;
-
-  if (!name || !email) {
-    alert("Please enter your name and email address before sending.");
-    return;
-  }
-  if (selectedFiles.length === 0) {
-    alert("Please select at least one photo to upload, or use one of the alternative methods on the right.");
-    return;
-  }
-
-  // Show progress animation
-  const pw = document.getElementById("progress-wrap");
-  const bar = document.getElementById("progress-bar");
-  const lbl = document.getElementById("progress-label");
-  pw.style.display = "block";
-
-  let progress = 0;
-  const messages = ["Preparing your photos...", "Uploading securely...", "Almost there...", "Finalizing..."];
-  let msgIndex = 0;
-
-  const interval = setInterval(() => {
-    progress += Math.random() * 18 + 5;
-    if (progress >= 100) {
-      progress = 100;
-      clearInterval(interval);
-      lbl.textContent = "Upload complete!";
-      bar.style.width = "100%";
-      setTimeout(() => {
-        document.getElementById("upload-area").style.display = "none";
-        document.getElementById("upload-success").style.display = "flex";
-        window.scrollTo({top: 0, behavior: "smooth"});
-      }, 800);
-    } else {
-      bar.style.width = progress + "%";
-      if (progress > msgIndex * 25) {
-        lbl.textContent = messages[Math.min(msgIndex, messages.length - 1)];
-        msgIndex++;
-      }
-    }
-  }, 180);
-}
 
 // ── SCROLL REVEAL ──
 const obs = new IntersectionObserver(entries => {
