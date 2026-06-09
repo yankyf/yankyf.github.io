@@ -108,15 +108,15 @@ footer{background:var(--dark);padding:5rem 6vw 2.5rem;}
 </head>
 <body>
 <nav id="nav">
-  <a class="logo" href="index.html">Photo <span>Tale</span> Design</a>
+  <a class="logo" href="index">Photo <span>Tale</span> Design</a>
   <ul class="nav-links">
-    <li><a href="index.html" class="active">Home</a></li>
-    <li><a href="albums.html">Albums</a></li>
-    <li><a href="portfolio.html">Portfolio</a></li>
-    <li><a href="process.html">How It Works</a></li>
-    <li><a href="contact.html">Contact</a></li>
-    <li><a href="upload.html">Upload Photos</a></li>
-    <li><a href="contact.html" class="nav-btn">Start Your Album</a></li>
+    <li><a href="index" class="active">Home</a></li>
+    <li><a href="albums">Albums</a></li>
+    <li><a href="portfolio">Portfolio</a></li>
+    <li><a href="process">How It Works</a></li>
+    <li><a href="contact">Contact</a></li>
+    <li><a href="upload">Upload Photos</a></li>
+    <li><a href="contact" class="nav-btn">Start Your Album</a></li>
   </ul>
 </nav>
 
@@ -129,7 +129,7 @@ footer{background:var(--dark);padding:5rem 6vw 2.5rem;}
     <input id="code-input" type="password" placeholder="Access code"/>
     <p id="code-error">Incorrect code — please try again.</p>
     <button class="popup-btn" onclick="checkCode()">View Portfolio →</button>
-    <p class="popup-note">Don't have a code? <a href="contact.html">Contact us</a></p>
+    <p class="popup-note">Don't have a code? <a href="contact">Contact us</a></p>
   </div>
 </div>
 
@@ -140,7 +140,7 @@ footer{background:var(--dark);padding:5rem 6vw 2.5rem;}
     <p class="hero-p fade d2">At Photo Tale Design, we help you turn the most important events of your life into albums of beauty and joy — crafted with elegance, care, and lasting quality.</p>
     <div class="hero-btns fade d3">
       <a href="#" class="btn-solid" onclick="openPopup();return false;">View Samples</a>
-      <a href="contact.html" class="btn-outline">Start Your Album</a>
+      <a href="contact" class="btn-outline">Start Your Album</a>
     </div>
   </div>
   <div class="hero-r">
@@ -179,13 +179,13 @@ footer{background:var(--dark);padding:5rem 6vw 2.5rem;}
   <span class="cta-tag fade">Begin Your Journey</span>
   <h2 class="fade d1">Ready to Begin<br><em>Your Album?</em></h2>
   <p class="fade d2">Send us your photos and we'll help turn them into a beautiful story — designed with care, built to last a lifetime.</p>
-  <a href="contact.html" class="cta-ghost fade d3">Start Now</a>
+  <a href="contact" class="cta-ghost fade d3">Start Now</a>
 </section>
 
 <footer>
   <div class="ft-top">
-    <div class="ft-brand"><a class="logo" href="index.html">Photo <span>Tale</span> Design</a><p>Custom photo album design — turning your most precious memories into timeless keepsakes.</p></div>
-    <div class="ft-col"><h4>Navigate</h4><ul><li><a href="albums.html">Albums</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="process.html">How It Works</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div class="ft-brand"><a class="logo" href="index">Photo <span>Tale</span> Design</a><p>Custom photo album design — turning your most precious memories into timeless keepsakes.</p></div>
+    <div class="ft-col"><h4>Navigate</h4><ul><li><a href="albums">Albums</a></li><li><a href="portfolio">Portfolio</a></li><li><a href="process">How It Works</a></li><li><a href="contact">Contact</a></li></ul></div>
     <div class="ft-col"><h4>Contact Us</h4><ul><li><a href="mailto:info@phototaledesign.com">info@phototaledesign.com</a></li><li><a href="tel:+19295252832">(929) 525-2832</a></li></ul></div>
   </div>
   <div class="ft-bottom"><p>© 2026 Photo Tale Design. All rights reserved.</p><p>phototaledesign.com</p></div>
@@ -198,7 +198,7 @@ document.querySelectorAll('.fade').forEach(el=>obs.observe(el));
 const CODE="123";
 function openPopup(){document.getElementById('popup').classList.add('open');setTimeout(()=>document.getElementById('code-input').focus(),100);}
 function closePopup(){document.getElementById('popup').classList.remove('open');document.getElementById('code-input').value='';document.getElementById('code-error').style.display='none';}
-function checkCode(){const v=document.getElementById('code-input').value.trim();if(v===CODE){window.location.href='samples.html';}else{document.getElementById('code-error').style.display='block';document.getElementById('code-input').value='';document.getElementById('code-input').focus();}}
+function checkCode(){const v=document.getElementById('code-input').value.trim();if(v===CODE){window.location.href='samples';}else{document.getElementById('code-error').style.display='block';document.getElementById('code-input').value='';document.getElementById('code-input').focus();}}
 document.getElementById('code-input').addEventListener('keydown',e=>{if(e.key==='Enter')checkCode();});
 document.getElementById('popup').addEventListener('click',function(e){if(e.target===this)closePopup();});
 </script>

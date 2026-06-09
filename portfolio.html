@@ -118,15 +118,15 @@ footer{background:var(--dark);padding:5rem 6vw 2.5rem;}
 <body>
 
 <nav id="nav">
-  <a class="logo" href="index.html">Photo <span>Tale</span> Design</a>
+  <a class="logo" href="index">Photo <span>Tale</span> Design</a>
   <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="albums.html">Albums</a></li>
-    <li><a href="portfolio.html" class="active">Portfolio</a></li>
-    <li><a href="process.html">How It Works</a></li>
-    <li><a href="contact.html">Contact</a></li>
-    <li><a href="upload.html">Upload Photos</a></li>
-    <li><a href="contact.html" class="nav-btn">Start Your Album</a></li>
+    <li><a href="index">Home</a></li>
+    <li><a href="albums">Albums</a></li>
+    <li><a href="portfolio" class="active">Portfolio</a></li>
+    <li><a href="process">How It Works</a></li>
+    <li><a href="contact">Contact</a></li>
+    <li><a href="upload">Upload Photos</a></li>
+    <li><a href="contact" class="nav-btn">Start Your Album</a></li>
   </ul>
 </nav>
 
@@ -165,7 +165,7 @@ footer{background:var(--dark);padding:5rem 6vw 2.5rem;}
     <input id="code-input" type="password" placeholder="Access code"/>
     <p id="code-error">Incorrect code — please try again.</p>
     <button class="popup-btn" onclick="checkCode()">View Album →</button>
-    <p class="popup-note">Don't have a code? <a href="contact.html">Contact us</a></p>
+    <p class="popup-note">Don't have a code? <a href="contact">Contact us</a></p>
   </div>
 </div>
 
@@ -175,8 +175,8 @@ footer{background:var(--dark);padding:5rem 6vw 2.5rem;}
   <h1 class="fade d1">A Glimpse of<br><em>Recent Albums</em></h1>
   <p class="fade d2">Click any album to view it, or browse our complete private collection. Each album was designed with the same care and attention we bring to yours.</p>
   <div class="page-header-btns fade d3">
-    <button class="btn-solid" onclick="openPopup('samples.html','Full Sample Gallery')">View Full Gallery</button>
-    <a href="contact.html" class="btn-outline-dark">Start Your Album</a>
+    <button class="btn-solid" onclick="openPopup('samples','Full Sample Gallery')">View Full Gallery</button>
+    <a href="contact" class="btn-outline-dark">Start Your Album</a>
   </div>
 </div>
 
@@ -224,15 +224,15 @@ footer{background:var(--dark);padding:5rem 6vw 2.5rem;}
 
   <!-- BOTTOM CTA -->
   <div class="port-cta fade">
-    <button class="btn-solid" onclick="openPopup('samples.html','Full Sample Gallery')">View Full Gallery</button>
-    <a href="contact.html" class="btn-outline-dark">Start Your Own Album</a>
+    <button class="btn-solid" onclick="openPopup('samples','Full Sample Gallery')">View Full Gallery</button>
+    <a href="contact" class="btn-outline-dark">Start Your Own Album</a>
   </div>
 </section>
 
 <footer>
   <div class="ft-top">
-    <div class="ft-brand"><a class="logo" href="index.html">Photo <span>Tale</span> Design</a><p>Custom photo album design — turning your most precious memories into timeless keepsakes.</p></div>
-    <div class="ft-col"><h4>Navigate</h4><ul><li><a href="albums.html">Albums</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="process.html">How It Works</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div class="ft-brand"><a class="logo" href="index">Photo <span>Tale</span> Design</a><p>Custom photo album design — turning your most precious memories into timeless keepsakes.</p></div>
+    <div class="ft-col"><h4>Navigate</h4><ul><li><a href="albums">Albums</a></li><li><a href="portfolio">Portfolio</a></li><li><a href="process">How It Works</a></li><li><a href="contact">Contact</a></li></ul></div>
     <div class="ft-col"><h4>Contact Us</h4><ul><li><a href="mailto:info@phototaledesign.com">info@phototaledesign.com</a></li><li><a href="tel:+19295252832">(929) 525-2832</a></li></ul></div>
   </div>
   <div class="ft-bottom"><p>© 2026 Photo Tale Design. All rights reserved.</p><p>phototaledesign.com</p></div>
@@ -243,12 +243,12 @@ const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersec
 document.querySelectorAll('.fade').forEach(el=>obs.observe(el));
 
 const ALBUMS = [
-  {title:'The Rose Garden', tag:'Wedding Album', sub:'40 spreads · Lustre layflat', page:'album-rose-garden.html', bg:'linear-gradient(135deg,#d4c8b0,#bfb095)'},
-  {title:'Cohen Family',    tag:'Family Album',  sub:'28 spreads · Leather cover', page:'album-cohen-family.html', bg:'linear-gradient(135deg,#c8bba0,#b8a888)'},
-  {title:"Liam's First Year", tag:'Baby Album',  sub:'24 spreads · Soft linen cover', page:'album-liam.html',     bg:'linear-gradient(135deg,#ddd5c5,#ccc0a8)'},
-  {title:'Bar Mitzvah — Daniel', tag:'Milestone Album', sub:'36 spreads · Acrylic cover', page:'album-daniel.html', bg:'linear-gradient(135deg,#c8baa4,#b8a88e)'},
-  {title:'Golden Anniversary', tag:'Event Album', sub:'32 spreads · Gold-stamped leather', page:'album-anniversary.html', bg:'linear-gradient(135deg,#d0c6b2,#bfb098)'},
-  {title:'Summer Engagement', tag:'Engagement Album', sub:'20 spreads · Acrylic cover', page:'album-engagement.html', bg:'linear-gradient(135deg,#cab898,#b8a480)'},
+  {title:'The Rose Garden', tag:'Wedding Album', sub:'40 spreads · Lustre layflat', page:'album-rose-garden', bg:'linear-gradient(135deg,#d4c8b0,#bfb095)'},
+  {title:'Cohen Family',    tag:'Family Album',  sub:'28 spreads · Leather cover', page:'album-cohen-family', bg:'linear-gradient(135deg,#c8bba0,#b8a888)'},
+  {title:"Liam's First Year", tag:'Baby Album',  sub:'24 spreads · Soft linen cover', page:'album-liam',     bg:'linear-gradient(135deg,#ddd5c5,#ccc0a8)'},
+  {title:'Bar Mitzvah — Daniel', tag:'Milestone Album', sub:'36 spreads · Acrylic cover', page:'album-daniel', bg:'linear-gradient(135deg,#c8baa4,#b8a88e)'},
+  {title:'Golden Anniversary', tag:'Event Album', sub:'32 spreads · Gold-stamped leather', page:'album-anniversary', bg:'linear-gradient(135deg,#d0c6b2,#bfb098)'},
+  {title:'Summer Engagement', tag:'Engagement Album', sub:'20 spreads · Acrylic cover', page:'album-engagement', bg:'linear-gradient(135deg,#cab898,#b8a480)'},
 ];
 
 let lbIdx = 0;
@@ -296,7 +296,7 @@ document.addEventListener('keydown', e => {
 
 // "View Full Gallery" buttons
 const GALLERY_CODE = "123";
-let targetPage = "samples.html";
+let targetPage = "samples";
 
 function openPopup(page, albumName) {
   targetPage = page;
