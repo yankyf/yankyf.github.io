@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The Rose Garden — Photo Tale Design</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Didact+Gothic&display=swap" rel="stylesheet"/>
+<style>
+:root{--ivory:#faf8f4;--cream:#f4f0e8;--linen:#ece5d8;--sand:#d6ccba;--gold:#b8966a;--gold-lt:#cead82;--dark:#1a1714;--muted:#7a6f62;--white:#ffffff;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Didact Gothic',sans-serif;background:var(--ivory);overflow-x:hidden;}
+h1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:300;letter-spacing:.02em;}
+.fade{opacity:0;transform:translateY(28px);transition:opacity .9s ease,transform .9s ease;}.fade.in{opacity:1;transform:none;}
+.fade.d1{transition-delay:.15s;}.fade.d2{transition-delay:.3s;}.fade.d3{transition-delay:.45s;}
+#nav{position:sticky;top:0;z-index:500;height:70px;padding:0 5vw;display:flex;align-items:center;justify-content:space-between;background:rgba(250,248,244,.97);box-shadow:0 1px 0 var(--linen);}
+.logo{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--dark);text-decoration:none;}
+.logo span{font-style:italic;color:var(--gold);font-weight:300;}
+.nav-back{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:.6rem;transition:color .25s;}
+.nav-back:hover{color:var(--gold);}
+.album-hero{background:var(--cream);padding:6rem 8vw 5rem;border-bottom:1px solid var(--linen);display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;}
+.tag{font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:1rem;}
+.album-hero-txt h1{font-size:clamp(2.8rem,4.5vw,4.5rem);color:var(--dark);line-height:1.08;margin-bottom:.6rem;}
+.album-hero-txt h1 em{font-style:italic;color:var(--gold);}
+.subtitle{font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem;display:block;}
+.album-hero-txt p{font-size:.88rem;color:var(--muted);line-height:1.9;margin-bottom:2.5rem;letter-spacing:.03em;}
+.btn-solid{background:var(--dark);color:var(--ivory);padding:.9rem 2.5rem;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;border:1px solid var(--dark);transition:background .3s;display:inline-block;}
+.btn-solid:hover{background:var(--gold);border-color:var(--gold);}
+.album-hero-img{aspect-ratio:4/3;background:linear-gradient(150deg,#d4c8b0,#bfb095);display:flex;align-items:center;justify-content:center;}
+.album-hero-img svg{width:60px;height:60px;opacity:.14;fill:var(--dark);}
+.album-grid{padding:4rem 5vw 5rem;background:var(--white);}
+.album-grid h2{font-size:2rem;color:var(--dark);margin-bottom:2.5rem;padding:0 1vw;}
+.grid-main{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
+.grid-item{overflow:hidden;position:relative;}
+.grid-item:nth-child(1){grid-column:span 2;aspect-ratio:16/9;}
+.grid-item:nth-child(2){aspect-ratio:3/4;grid-row:span 2;}
+.grid-item:nth-child(3){aspect-ratio:4/3;}
+.grid-item:nth-child(4){aspect-ratio:1/1;}
+.grid-item:nth-child(5){aspect-ratio:4/3;grid-column:span 2;}
+.grid-item:nth-child(6){aspect-ratio:4/3;}
+.grid-item:nth-child(7){aspect-ratio:3/4;}
+.grid-item:nth-child(8){aspect-ratio:4/3;}
+.grid-item:nth-child(1) .gi-bg{background:linear-gradient(145deg,#d4c8b0,#bfb095);}
+.grid-item:nth-child(2) .gi-bg{background:linear-gradient(145deg,#c8bba0,#b8a888);}
+.grid-item:nth-child(3) .gi-bg{background:linear-gradient(145deg,#ddd5c5,#ccc0a8);}
+.grid-item:nth-child(4) .gi-bg{background:linear-gradient(145deg,#c8baa4,#b8a88e);}
+.grid-item:nth-child(5) .gi-bg{background:linear-gradient(145deg,#d0c6b2,#bfb098);}
+.grid-item:nth-child(6) .gi-bg{background:linear-gradient(145deg,#cab898,#b8a480);}
+.grid-item:nth-child(7) .gi-bg{background:linear-gradient(145deg,#d4c8b0,#b8a888);}
+.grid-item:nth-child(8) .gi-bg{background:linear-gradient(145deg,#ddd5c5,#b8a88e);}
+.gi-bg{position:absolute;inset:0;transition:transform .8s ease;}
+.grid-item:hover .gi-bg{transform:scale(1.05);}
+.gi-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+.gi-ph svg{width:32px;height:32px;opacity:.12;fill:var(--dark);}
+.album-cta{background:var(--dark);padding:6rem 8vw;text-align:center;}
+.album-cta p.label{font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem;}
+.album-cta h2{font-size:clamp(2rem,3vw,3.2rem);color:var(--ivory);font-weight:300;margin-bottom:1rem;}
+.album-cta h2 em{font-style:italic;color:var(--gold-lt);}
+.album-cta .sub{font-size:.84rem;color:rgba(250,248,244,.45);line-height:1.85;max-width:440px;margin:0 auto 2.5rem;}
+footer{background:var(--dark);padding:4rem 6vw 2rem;border-top:1px solid rgba(255,255,255,.06);}
+.ft-top{display:grid;grid-template-columns:2fr 1fr 1fr;gap:4rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.07);}
+.ft-brand .logo{color:var(--ivory);display:block;margin-bottom:1rem;}
+.ft-brand p{font-size:.78rem;color:rgba(250,248,244,.32);line-height:1.85;max-width:240px;}
+.ft-col h4{font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:1.4rem;}
+.ft-col ul{list-style:none;display:flex;flex-direction:column;gap:.6rem;}
+.ft-col a{text-decoration:none;font-size:.78rem;color:rgba(250,248,244,.38);letter-spacing:.04em;transition:color .25s;}
+.ft-col a:hover{color:var(--gold-lt);}
+.ft-bottom{padding-top:1.8rem;display:flex;justify-content:space-between;}
+.ft-bottom p{font-size:.65rem;color:rgba(250,248,244,.2);letter-spacing:.08em;}
+</style>
+</head>
+<body>
+<nav id="nav">
+  <a class="logo" href="index.html">Photo <span>Tale</span> Design</a>
+  <a class="nav-back" href="portfolio.html">&#8592; Back to Portfolio</a>
+</nav>
+<div class="album-hero">
+  <div class="album-hero-txt fade">
+    <span class="tag">Album Showcase</span>
+    <h1>The Rose Garden</h1>
+    <span class="subtitle">Wedding · 40 Spreads</span>
+    <p>A romantic, elegant wedding album featuring soft garden tones, lush florals, and timeless layout design.</p>
+    <a href="contact.html" class="btn-solid">Create a Similar Album</a>
+  </div>
+  <div class="album-hero-img fade d1">
+    <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+  </div>
+</div>
+<div class="album-grid">
+  <h2 class="fade">Sample Spreads</h2>
+  <div class="grid-main">
+    <div class="grid-item fade"><div class="gi-bg"></div><div class="gi-ph"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></div></div>
+    <div class="grid-item fade d1"><div class="gi-bg"></div><div class="gi-ph"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></div></div>
+    <div class="grid-item fade"><div class="gi-bg"></div><div class="gi-ph"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></div></div>
+    <div class="grid-item fade d1"><div class="gi-bg"></div><div class="gi-ph"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></div></div>
+    <div class="grid-item fade"><div class="gi-bg"></div><div class="gi-ph"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></div></div>
+    <div class="grid-item fade d1"><div class="gi-bg"></div><div class="gi-ph"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></div></div>
+    <div class="grid-item fade"><div class="gi-bg"></div><div class="gi-ph"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></div></div>
+    <div class="grid-item fade d1"><div class="gi-bg"></div><div class="gi-ph"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></div></div>
+  </div>
+</div>
+<div class="album-cta">
+  <p class="label fade">Inspired?</p>
+  <h2 class="fade d1">Create Your Own<br><em>Beautiful Album</em></h2>
+  <p class="sub fade d2">Tell us about your photos and we'll design something just as beautiful for you.</p>
+  <a href="contact.html" class="btn-solid fade d3">Start Your Album</a>
+</div>
+<footer>
+  <div class="ft-top">
+    <div class="ft-brand"><a class="logo" href="index.html">Photo <span>Tale</span> Design</a><p>Custom photo album design — turning your most precious memories into timeless keepsakes.</p></div>
+    <div class="ft-col"><h4>Navigate</h4><ul><li><a href="albums.html">Albums</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="process.html">How It Works</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div class="ft-col"><h4>Contact</h4><ul><li><a href="mailto:info@phototaledesign.com">info@phototaledesign.com</a></li><li><a href="tel:+19296300298">(929) 630-0298</a></li></ul></div>
+  </div>
+  <div class="ft-bottom"><p>&#169; 2026 Photo Tale Design. All rights reserved.</p><p>phototaledesign.com</p></div>
+</footer>
+<script>
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}});},{threshold:.1});
+document.querySelectorAll('.fade').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
