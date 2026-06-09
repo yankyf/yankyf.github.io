@@ -93,9 +93,11 @@ footer{background:var(--dark);padding:5rem 6vw 2.5rem;}
     </div>
   </div>
   <div class="fade d1">
-    <form class="contact-form" name="order-request" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="thank-you.html">
-      <input type="hidden" name="form-name" value="order-request"/>
-      <p style="display:none"><input name="bot-field"/></p>
+    <form class="contact-form" name="order-request" method="POST" action="https://api.web3forms.com/submit">
+      <input type="hidden" name="access_key" value="3c35c658-ba97-42e8-b41a-9a78ff7e7f6d"/>
+      <input type="hidden" name="redirect" value="https://yankyf.github.io/thank-you.html"/>
+      <input type="hidden" name="subject" value="New Album Request — Photo Tale Design"/>
+      <input type="checkbox" name="botcheck" style="display:none"/>
       <div class="cf-row">
         <div class="cf"><label>First Name</label><input type="text" name="first-name" required/></div>
         <div class="cf"><label>Last Name</label><input type="text" name="last-name" required/></div>
