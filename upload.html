@@ -10,7 +10,7 @@
 html{scroll-behavior:smooth;}
 body{font-family:"Didact Gothic",sans-serif;background:var(--ivory);overflow-x:hidden;min-height:100vh;display:flex;flex-direction:column;}
 h1,h2,h3{font-family:"Cormorant Garamond",serif;font-weight:300;letter-spacing:.02em;}
-.fade{opacity:0;transform:translateY(22px);filter:blur(4px);transition:opacity 1.1s cubic-bezier(.16,1,.3,1),transform 1.1s cubic-bezier(.16,1,.3,1),filter 1.1s cubic-bezier(.16,1,.3,1);}.fade.in{opacity:1;transform:none;filter:blur(0);}
+.fade{opacity:0;transform:translateY(28px);transition:opacity .9s ease,transform .9s ease;}.fade.in{opacity:1;transform:none;}
 .fade.d1{transition-delay:.15s;}.fade.d2{transition-delay:.3s;}.fade.d3{transition-delay:.45s;}
 
 /* NAV */
@@ -46,8 +46,7 @@ h1,h2,h3{font-family:"Cormorant Garamond",serif;font-weight:300;letter-spacing:.
 .gate-note{margin-top:1.2rem;font-size:.74rem;color:var(--muted);letter-spacing:.03em;}
 .gate-note a{color:var(--gold);text-decoration:none;}
 
-/* UPLOAD AREA - hidden until code correct */
-#upload-area{display:none;flex:1;padding:5rem 8vw;background:var(--ivory);}
+#upload-area{flex:1;padding:5rem 8vw;background:var(--ivory);}
 .upload-intro{text-align:center;margin-bottom:4rem;}
 .upload-intro .tag{font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:1rem;}
 .upload-intro h2{font-size:clamp(2rem,3vw,3rem);color:var(--dark);margin-bottom:1rem;}
@@ -141,39 +140,23 @@ footer{background:var(--dark);padding:4rem 6vw 2rem;margin-top:auto;}
 <body>
 
 <nav id="nav">
-  <a class="logo" href="index">Photo <span>Tale</span> Design</a>
+  <a class="logo" href="index.html">Photo <span>Tale</span> Design</a>
   <ul class="nav-links">
-    <li><a href="index">Home</a></li>
-    <li><a href="albums">Albums</a></li>
-    <li><a href="portfolio">Portfolio</a></li>
-    <li><a href="process">How It Works</a></li>
-    <li><a href="contact">Contact</a></li>
-    <li><a href="upload" class="active nav-btn">Upload Photos</a></li>
+    <li><a href="albums.html">Albums</a></li>
+    <li><a href="portfolio.html">Portfolio</a></li>
+    <li><a href="process.html">How It Works</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="upload.html" class="active nav-btn">Upload Photos</a></li>
   </ul>
 </nav>
 
 <div class="page-header">
   <span class="tag fade">Secure Upload</span>
   <h1 class="fade d1">Upload Your <em>Photos</em></h1>
-  <p class="fade d2">Send us your photos securely. A private access code is required to protect your personal memories.</p>
+  <p class="fade d2">Send us your photos securely and we'll get started on your album.</p>
 </div>
 
-<!-- GATE: code entry -->
-<div id="gate">
-  <div class="gate-box fade">
-    <span class="gate-icon">&#128274;</span>
-    <span class="gate-tag">Access Required</span>
-    <h2>Enter Upload Code</h2>
-    <p>This upload area is private. Please enter the access code provided to you by Photo Tale Design to continue.</p>
-    <input id="upload-code-input" type="password" placeholder="Upload access code"/>
-    <p id="upload-code-error">Incorrect code — please contact us to receive your code.</p>
-    <button class="gate-btn" onclick="checkUploadCode()">Continue to Upload &#8594;</button>
-    <p class="gate-note">Don't have a code? <a href="contact">Contact us</a> and we'll send one right away.</p>
-  </div>
-</div>
-
-<!-- UPLOAD AREA: shown after correct code -->
-<div id="upload-area">
+<div id="upload-area" style="display:block">
   <div class="upload-intro fade">
     <span class="tag">You're In</span>
     <h2>Share Your <em>Photos With Us</em></h2>
@@ -182,43 +165,50 @@ footer{background:var(--dark);padding:4rem 6vw 2rem;margin-top:auto;}
 
   <div class="upload-grid">
 
-    <!-- LEFT: Request form -->
+    <!-- LEFT: Upload form -->
     <div class="upload-card fade">
-      <h3>Send Your Request</h3>
-      <span class="card-sub">Fill In Your Details</span>
-      <p>Tell us about your project, then send your photos using one of the methods on the right. We'll be in touch within 1 business day.</p>
+      <h3>Direct Upload</h3>
+      <span class="card-sub">Drag & Drop or Browse</span>
+      <p>Upload your photos directly here. Supports JPG, PNG, HEIC, and RAW files up to 500MB total.</p>
 
-      <form id="upload-form" action="https://api.web3forms.com/submit" method="POST">
-        <input type="hidden" name="access_key" value="3c35c658-ba97-42e8-b41a-9a78ff7e7f6d"/>
-        <input type="hidden" name="subject" value="New Photo Submission — Photo Tale Design"/>
-        <input type="hidden" name="redirect" value="https://www.phototaledesign.com/thank-you"/>
-        <input type="checkbox" name="botcheck" style="display:none"/>
+      <div class="dropzone" id="dropzone">
+        <input type="file" id="file-input" multiple accept="image/*,.heic,.raw,.cr2,.nef,.arw" onchange="handleFiles(this.files)"/>
+        <span class="dropzone-icon">&#128247;</span>
+        <p><strong>Drop your photos here</strong><br>or click to browse your files</p>
+        <span class="browse">Browse Files</span>
+      </div>
 
-        <div class="field-group">
-          <div class="field-row">
-            <div class="field"><label>Your Name</label><input type="text" name="name" placeholder="Jane Smith" required/></div>
-            <div class="field"><label>Phone Number</label><input type="tel" name="phone" placeholder="+1 (555) 000-0000"/></div>
-          </div>
-          <div class="field"><label>Email Address</label><input type="email" name="email" placeholder="jane@email.com" required/></div>
-          <div class="field">
-            <label>Album Type</label>
-            <select name="album_type" required>
-              <option value="">Select...</option>
-              <option>Wedding Album</option>
-              <option>Engagement Album</option>
-              <option>Bar / Bat Mitzvah Album</option>
-              <option>Baby Album</option>
-              <option>Family Album</option>
-              <option>Upsherin Album</option>
-              <option>Custom Project</option>
-            </select>
-          </div>
-          <div class="field"><label>Photo Link (Google Drive, Dropbox, WeTransfer…)</label><input type="url" name="photo_link" placeholder="https://drive.google.com/..." required/></div>
-          <div class="field"><label>Notes for the Designer</label><textarea name="notes" placeholder="Any style preferences, important moments, people to highlight..."></textarea></div>
+      <div class="file-list" id="file-list"></div>
+      <p class="file-count" id="file-count"></p>
+
+      <div class="progress-wrap" id="progress-wrap">
+        <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-bar"></div></div>
+        <p class="progress-label" id="progress-label">Preparing upload...</p>
+      </div>
+
+      <div class="field-group">
+        <div class="field-row">
+          <div class="field"><label>Your Name</label><input type="text" id="uploader-name" placeholder="Jane Smith"/></div>
+          <div class="field"><label>Phone Number</label><input type="tel" id="uploader-phone" placeholder="+1 (555) 000-0000"/></div>
         </div>
+        <div class="field"><label>Email Address</label><input type="email" id="uploader-email" placeholder="jane@email.com"/></div>
+        <div class="field">
+          <label>Album Type</label>
+          <select id="uploader-album">
+            <option value="">Select...</option>
+            <option>Wedding Album</option>
+            <option>Engagement Album</option>
+            <option>Bar / Bat Mitzvah Album</option>
+            <option>Baby Album</option>
+            <option>Family Album</option>
+            <option>Upsherin Album</option>
+            <option>Custom Project</option>
+          </select>
+        </div>
+        <div class="field"><label>Notes for the Designer</label><textarea id="uploader-notes" placeholder="Any style preferences, important moments, people to highlight..."></textarea></div>
+      </div>
 
-        <button type="submit" class="upload-submit-btn">Submit My Photos</button>
-      </form>
+      <button class="upload-submit-btn" onclick="submitUpload()">Send Photos & Request &#8594;</button>
     </div>
 
     <!-- RIGHT: Other methods -->
@@ -252,7 +242,7 @@ footer{background:var(--dark);padding:4rem 6vw 2rem;margin-top:auto;}
         <span class="method-num">04</span>
         <div class="method-body">
           <h4>WhatsApp or Text</h4>
-          <p>For smaller sets of photos, you can send them directly via WhatsApp or text to <a href="tel:+19295252832" class="email-link">(929) 525-2832</a>.</p>
+          <p>For smaller sets of photos, you can send them directly via WhatsApp or text to <a href="tel:+19296300298" class="email-link">(929) 630-0298</a>.</p>
         </div>
       </div>
     </div>
@@ -264,53 +254,127 @@ footer{background:var(--dark);padding:4rem 6vw 2rem;margin-top:auto;}
 <div id="upload-success">
   <div class="success-box">
     <span class="success-icon">&#10003;</span>
-    <h2>Request <em>Received!</em></h2>
-    <p>Thank you — your request has been sent. Don't forget to send your photos via Google Drive, Dropbox, or WeTransfer to <a href="mailto:info@phototaledesign.com" style="color:var(--gold);text-decoration:none;">info@phototaledesign.com</a>.</p>
+    <h2>Photos <em>Received!</em></h2>
+    <p>Thank you — your photos and request have been successfully sent to Photo Tale Design.</p>
     <div class="success-steps">
       <div class="success-step"><span class="success-step-n">01</span><p>We'll review your photos and notes within 1 business day</p></div>
       <div class="success-step"><span class="success-step-n">02</span><p>Our designer will begin your album layout</p></div>
       <div class="success-step"><span class="success-step-n">03</span><p>You'll receive a digital proof for review and approval</p></div>
       <div class="success-step"><span class="success-step-n">04</span><p>Your finished album will be printed and delivered</p></div>
     </div>
-    <a href="index" class="btn-solid">Back to Home</a>
+    <a href="index.html" class="btn-solid">Back to Home</a>
   </div>
 </div>
 
 <footer>
   <div class="ft-top">
-    <div class="ft-brand"><a class="logo" href="index">Photo <span>Tale</span> Design</a><p>Custom photo album design — turning your most precious memories into timeless keepsakes.</p></div>
-    <div class="ft-col"><h4>Navigate</h4><ul><li><a href="albums">Albums</a></li><li><a href="portfolio">Portfolio</a></li><li><a href="process">How It Works</a></li><li><a href="contact">Contact</a></li></ul></div>
-    <div class="ft-col"><h4>Contact</h4><ul><li><a href="mailto:info@phototaledesign.com">info@phototaledesign.com</a></li><li><a href="tel:+19295252832">(929) 525-2832</a></li></ul></div>
+    <div class="ft-brand"><a class="logo" href="index.html">Photo <span>Tale</span> Design</a><p>Custom photo album design — turning your most precious memories into timeless keepsakes.</p></div>
+    <div class="ft-col"><h4>Navigate</h4><ul><li><a href="albums.html">Albums</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="process.html">How It Works</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div class="ft-col"><h4>Contact</h4><ul><li><a href="mailto:info@phototaledesign.com">info@phototaledesign.com</a></li><li><a href="tel:+19296300298">(929) 630-0298</a></li></ul></div>
   </div>
   <div class="ft-bottom"><p>&#169; 2026 Photo Tale Design. All rights reserved.</p><p>phototaledesign.com</p></div>
 </footer>
 
 <script>
-const UPLOAD_CODE = "456";
+let selectedFiles = [];
 
-// ── CODE GATE ──
-function checkUploadCode() {
-  const v = document.getElementById("upload-code-input").value.trim();
-  const err = document.getElementById("upload-code-error");
-  if (v === UPLOAD_CODE) {
-    document.getElementById("gate").style.display = "none";
-    document.getElementById("upload-area").style.display = "block";
-    window.scrollTo({top: 0, behavior: "smooth"});
+// ── DRAG & DROP ──
+const dropzone = document.getElementById("dropzone");
+dropzone.addEventListener("dragover", e => { e.preventDefault(); dropzone.classList.add("dragover"); });
+dropzone.addEventListener("dragleave", () => dropzone.classList.remove("dragover"));
+dropzone.addEventListener("drop", e => {
+  e.preventDefault();
+  dropzone.classList.remove("dragover");
+  handleFiles(e.dataTransfer.files);
+});
+
+function handleFiles(files) {
+  for (let f of files) {
+    if (!selectedFiles.find(x => x.name === f.name && x.size === f.size)) {
+      selectedFiles.push(f);
+    }
+  }
+  renderFileList();
+}
+
+function renderFileList() {
+  const list = document.getElementById("file-list");
+  const count = document.getElementById("file-count");
+  list.innerHTML = "";
+  let totalSize = 0;
+  selectedFiles.forEach((f, i) => {
+    totalSize += f.size;
+    const item = document.createElement("div");
+    item.className = "file-item";
+    item.innerHTML = `<span>${f.name}</span><span class="file-size">${(f.size/1024/1024).toFixed(1)} MB</span><button class="remove-file" onclick="removeFile(${i})">&#10005;</button>`;
+    list.appendChild(item);
+  });
+  if (selectedFiles.length > 0) {
+    count.textContent = `${selectedFiles.length} photo${selectedFiles.length > 1 ? "s" : ""} selected — ${(totalSize/1024/1024).toFixed(1)} MB total`;
   } else {
-    err.style.display = "block";
-    document.getElementById("upload-code-input").value = "";
-    document.getElementById("upload-code-input").focus();
+    count.textContent = "";
   }
 }
-document.getElementById("upload-code-input").addEventListener("keydown", e => {
-  if (e.key === "Enter") checkUploadCode();
-});
+
+function removeFile(index) {
+  selectedFiles.splice(index, 1);
+  renderFileList();
+}
+
+// ── SUBMIT ──
+function submitUpload() {
+  const name = document.getElementById("uploader-name").value.trim();
+  const email = document.getElementById("uploader-email").value.trim();
+  const phone = document.getElementById("uploader-phone").value.trim();
+  const album = document.getElementById("uploader-album").value;
+
+  if (!name || !email) {
+    alert("Please enter your name and email address before sending.");
+    return;
+  }
+  if (selectedFiles.length === 0) {
+    alert("Please select at least one photo to upload, or use one of the alternative methods on the right.");
+    return;
+  }
+
+  // Show progress animation
+  const pw = document.getElementById("progress-wrap");
+  const bar = document.getElementById("progress-bar");
+  const lbl = document.getElementById("progress-label");
+  pw.style.display = "block";
+
+  let progress = 0;
+  const messages = ["Preparing your photos...", "Uploading securely...", "Almost there...", "Finalizing..."];
+  let msgIndex = 0;
+
+  const interval = setInterval(() => {
+    progress += Math.random() * 18 + 5;
+    if (progress >= 100) {
+      progress = 100;
+      clearInterval(interval);
+      lbl.textContent = "Upload complete!";
+      bar.style.width = "100%";
+      setTimeout(() => {
+        document.getElementById("upload-area").style.display = "none";
+        document.getElementById("upload-success").style.display = "flex";
+        window.scrollTo({top: 0, behavior: "smooth"});
+      }, 800);
+    } else {
+      bar.style.width = progress + "%";
+      if (progress > msgIndex * 25) {
+        lbl.textContent = messages[Math.min(msgIndex, messages.length - 1)];
+        msgIndex++;
+      }
+    }
+  }, 180);
+}
 
 // ── SCROLL REVEAL ──
 const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); obs.unobserve(e.target); }});
 }, {threshold: .1});
 document.querySelectorAll(".fade").forEach(el => obs.observe(el));
+document.querySelectorAll('.field').forEach(el=>{el.style.cursor='text';el.addEventListener('click',function(e){const inp=this.querySelector('input,select,textarea');if(inp&&e.target===this)inp.focus();});});
 </script>
-<div id="site-gate" style="display:none;position:fixed;inset:0;background:#f4f0e8;z-index:99999;align-items:center;justify-content:center;font-family:Didact Gothic,sans-serif;"><div style="max-width:480px;width:90%;padding:3.5rem 3rem;text-align:center;"><div style="font-family:Cormorant Garamond,serif;font-size:1.3rem;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:#1a1714;margin-bottom:2.5rem;">Photo <span style="font-style:italic;color:#b8966a;font-weight:300;">Tale</span> Design</div><div style="width:40px;height:1px;background:#b8966a;margin:0 auto 2rem;"></div><h2 style="font-family:Cormorant Garamond,serif;font-size:2.2rem;font-weight:300;color:#1a1714;margin-bottom:1rem;line-height:1.2;">Under <em style="font-style:italic;color:#b8966a;">Construction</em></h2><p style="font-size:.84rem;color:#7a6f62;line-height:1.85;margin-bottom:.6rem;letter-spacing:.03em;">We are working on something beautiful.</p><p style="font-size:.84rem;color:#7a6f62;line-height:1.85;margin-bottom:2rem;letter-spacing:.03em;">If you would like to make an album, contact us at<br><a href="mailto:info@phototaledesign.com" style="color:#b8966a;text-decoration:none;">info@phototaledesign.com</a> or <a href="tel:+19295252832" style="color:#b8966a;text-decoration:none;">(929) 525-2832</a></p><div style="width:40px;height:1px;background:#ece5d8;margin:0 auto 2rem;"></div><p style="font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:#d6ccba;margin-bottom:1rem;">Staff Access</p><input id="gate-input" type="password" placeholder="Access code" style="width:100%;border:none;border-bottom:1px solid #d6ccba;background:transparent;padding:.8rem 0;font-family:Didact Gothic,sans-serif;font-size:.9rem;text-align:center;letter-spacing:.3em;outline:none;color:#1a1714;transition:border-color .3s;"/><p id="gate-error" style="font-size:.74rem;color:#904030;margin:.7rem 0 0;display:none;">Incorrect code — please try again.</p><button onclick="checkGate()" style="background:#b8966a;color:#faf8f4;border:none;padding:.8rem 2.5rem;font-family:Didact Gothic,sans-serif;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;margin-top:1.2rem;transition:background .3s;">Enter &rarr;</button></div></div><script>!function(){var e=sessionStorage.getItem("ptd_access");if(e!=="627627"){var g=document.getElementById("site-gate");g.style.display="flex";document.body.style.overflow="hidden";}document.getElementById("gate-input").addEventListener("keydown",function(e){if(e.key==="Enter")checkGate();});}();function checkGate(){var v=document.getElementById("gate-input").value;if(v==="627627"){sessionStorage.setItem("ptd_access","627627");document.getElementById("site-gate").style.display="none";document.body.style.overflow="";}else{document.getElementById("gate-error").style.display="block";document.getElementById("gate-input").value="";document.getElementById("gate-input").focus();}}</script></body>
+</body>
 </html>
