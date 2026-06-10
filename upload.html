@@ -46,8 +46,7 @@ h1,h2,h3{font-family:"Cormorant Garamond",serif;font-weight:300;letter-spacing:.
 .gate-note{margin-top:1.2rem;font-size:.74rem;color:var(--muted);letter-spacing:.03em;}
 .gate-note a{color:var(--gold);text-decoration:none;}
 
-/* UPLOAD AREA - hidden until code correct */
-#upload-area{display:none;flex:1;padding:5rem 8vw;background:var(--ivory);}
+#upload-area{flex:1;padding:5rem 8vw;background:var(--ivory);}
 .upload-intro{text-align:center;margin-bottom:4rem;}
 .upload-intro .tag{font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:1rem;}
 .upload-intro h2{font-size:clamp(2rem,3vw,3rem);color:var(--dark);margin-bottom:1rem;}
@@ -154,25 +153,10 @@ footer{background:var(--dark);padding:4rem 6vw 2rem;margin-top:auto;}
 <div class="page-header">
   <span class="tag fade">Secure Upload</span>
   <h1 class="fade d1">Upload Your <em>Photos</em></h1>
-  <p class="fade d2">Send us your photos securely. A private access code is required to protect your personal memories.</p>
+  <p class="fade d2">Send us your photos securely and we'll get started on your album.</p>
 </div>
 
-<!-- GATE: code entry -->
-<div id="gate">
-  <div class="gate-box fade">
-    <span class="gate-icon">&#128274;</span>
-    <span class="gate-tag">Access Required</span>
-    <h2>Enter Upload Code</h2>
-    <p>This upload area is private. Please enter the access code provided to you by Photo Tale Design to continue.</p>
-    <input id="upload-code-input" type="password" placeholder="Upload access code"/>
-    <p id="upload-code-error">Incorrect code — please contact us to receive your code.</p>
-    <button class="gate-btn" onclick="checkUploadCode()">Continue to Upload &#8594;</button>
-    <p class="gate-note">Don't have a code? <a href="contact.html">Contact us</a> and we'll send one right away.</p>
-  </div>
-</div>
-
-<!-- UPLOAD AREA: shown after correct code -->
-<div id="upload-area">
+<div id="upload-area" style="display:block">
   <div class="upload-intro fade">
     <span class="tag">You're In</span>
     <h2>Share Your <em>Photos With Us</em></h2>
@@ -292,26 +276,7 @@ footer{background:var(--dark);padding:4rem 6vw 2rem;margin-top:auto;}
 </footer>
 
 <script>
-const UPLOAD_CODE = "456";
 let selectedFiles = [];
-
-// ── CODE GATE ──
-function checkUploadCode() {
-  const v = document.getElementById("upload-code-input").value.trim();
-  const err = document.getElementById("upload-code-error");
-  if (v === UPLOAD_CODE) {
-    document.getElementById("gate").style.display = "none";
-    document.getElementById("upload-area").style.display = "block";
-    window.scrollTo({top: 0, behavior: "smooth"});
-  } else {
-    err.style.display = "block";
-    document.getElementById("upload-code-input").value = "";
-    document.getElementById("upload-code-input").focus();
-  }
-}
-document.getElementById("upload-code-input").addEventListener("keydown", e => {
-  if (e.key === "Enter") checkUploadCode();
-});
 
 // ── DRAG & DROP ──
 const dropzone = document.getElementById("dropzone");
