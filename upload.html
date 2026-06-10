@@ -409,6 +409,7 @@ const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); obs.unobserve(e.target); }});
 }, {threshold: .1});
 document.querySelectorAll(".fade").forEach(el => obs.observe(el));
+document.querySelectorAll('.field').forEach(el=>{el.style.cursor='text';el.addEventListener('click',function(e){const inp=this.querySelector('input,select,textarea');if(inp&&e.target===this)inp.focus();});});
 </script>
 </body>
 </html>
